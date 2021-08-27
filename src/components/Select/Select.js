@@ -38,17 +38,19 @@ export default ()=>{
   useEffect(()=>{
     console.log('--| mount');
 
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('mousemove', handleMouseMove);
+    refSelectBox.current.parentNode.addEventListener('mousedown', handleMouseDown);
+    refSelectBox.current.parentNode.addEventListener('mouseup', handleMouseUp);
+    refSelectBox.current.parentNode.addEventListener('mousemove', handleMouseMove);
+    refSelectBox.current.parentNode.addEventListener('mouseleave', handlerMouseLeave);
 
   // |--- On Unmount - Unset event handlers
   return ()=>{
     console.log('--| unmount');
 
-    document.removeEventListener('mousedown', handleMouseDown);
-    document.removeEventListener('mouseup', handleMouseUp);
-    document.removeEventListener('mousemove', handleMouseMove);
+    refSelectBox.current.parentNode.removeEventListener('mousedown', handleMouseDown);
+    refSelectBox.current.parentNode.removeEventListener('mouseup', handleMouseUp);
+    refSelectBox.current.parentNode.removeEventListener('mousemove', handleMouseMove);
+    refSelectBox.current.parentNode.removeEventListener('mouseleave', handlerMouseLeave);
   }});
 
 
@@ -58,10 +60,6 @@ export default ()=>{
     let $container = refSelectBox.current.parentNode;
 
     console.log('--| mouse down');
-    console.dir(e);
-    console.log(e.target);
-
-    if(e.target !== $container) return;
 
     refSelectBox.current.style.left = e.clientX+'px';
     refSelectBox.current.style.top  = e.clientY+'px';
@@ -92,10 +90,6 @@ export default ()=>{
   // | Handler - Mouse Up
   // |----------
   const handleMouseUp = (e)=>{
-    let $container = refSelectBox.current.parentNode;
-
-    if(!(e.target===$container)) return;
-
     console.log('--| mouse up');
 
     isDrag = false
@@ -108,6 +102,29 @@ export default ()=>{
     selection.delta.y = 0;
   }
 
+
+  // | Handler - Mouse Leave
+  // |----------
+  const handlerMouseLeave = (e)=>{
+    let $container = refSelectBox.current.parentNode;
+
+    console.log('--| mouse leave');
+
+    if(!(e.target===$container)) return;
+
+    isDrag = false
+
+    refSelectBox.current.style.top    = 'unset';
+    refSelectBox.current.style.left   = 'unset';
+    refSelectBox.current.style.height = 'unset';
+    refSelectBox.current.style.width  = 'unset';
+    selection.delta.x = 0;
+    selection.delta.y = 0;
+  }
+
+
+  // | Render
+  // |----------
   return (
     <div
       ref={refSelectBox}
