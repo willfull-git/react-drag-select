@@ -18,6 +18,7 @@ const App = ()=>{
       className={styles.container}
     >
       <Select/>
+      <Grid></Grid>
     </div>
   );
 }

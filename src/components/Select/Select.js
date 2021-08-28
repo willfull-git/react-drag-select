@@ -5,6 +5,7 @@ import React, {
   useRef
 } from 'react';
 import styles from './select.css';
+import stylesCell from  '../Cell/cell.css';
 
 
 const selection = {
@@ -29,7 +30,8 @@ const selection = {
 export default ()=>{
   console.log('--| SELECTION render');
 
-  let isDrag = false
+  let isDrag = false,
+      $cells = null;
 
   const refSelectBox = useRef();
 
@@ -59,6 +61,8 @@ export default ()=>{
   const handleMouseDown = (e)=>{
     let $container = refSelectBox.current.parentNode;
 
+    $cells = document.querySelectorAll('.cell_cell');
+
     console.log('--| mouse down');
 
     refSelectBox.current.style.left = e.clientX+'px';
@@ -84,6 +88,24 @@ export default ()=>{
     refSelectBox.current.style.left   = Math.min(selection.startPoint.x, e.clientX)+'px';
     refSelectBox.current.style.height = selection.delta.y+'px';
     refSelectBox.current.style.width  = selection.delta.x+'px';
+
+    $cells.forEach((v, i)=>{
+      let pos = v.getBoundingClientRect();
+
+      if((
+        Math.min(selection.startPoint.x, e.clientX) < pos.x
+        &&
+        Math.min(selection.startPoint.y, e.clientY) < pos.y
+      ) && (
+        Math.max(selection.startPoint.x, e.clientX) > pos.x+pos.width
+        &&
+        Math.max(selection.startPoint.y, e.clientY) > pos.y+pos.width
+      )){
+        v.classList.add(stylesCell['m-active']);
+      } else {
+        v.classList.remove(stylesCell['m-active']);
+      }
+    });
   }
 
 

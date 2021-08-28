@@ -6,7 +6,7 @@ import Cell from '../Cell/Cell';
 
 const modelSelectElements = [];
 
-for(let i=50; i>0; i--){
+for(let i=350; i>0; i--){
   const el = {
     selected: false,
   }

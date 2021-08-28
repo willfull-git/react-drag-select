@@ -3,6 +3,8 @@ body {
 }
 
 .container {
-  height: 100vh;
-  width: 100vw;
+  /* height: calc(100vh - 200px); */
+  width: calc(100vw - 200px);
+  margin: 100px;
+  background-color: #eee;
 }
