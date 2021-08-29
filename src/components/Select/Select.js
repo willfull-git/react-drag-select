@@ -116,6 +116,12 @@ export default ()=>{
 
     isDrag = false
 
+    const $cellsActive = document.querySelectorAll('.'+stylesCell['m-active']);
+
+    $cellsActive.forEach((el, i)=>{
+      el.dispatchEvent(new Event('select'));
+    });
+
     refSelectBox.current.style.top    = 'unset';
     refSelectBox.current.style.left   = 'unset';
     refSelectBox.current.style.height = 'unset';

@@ -5,6 +5,9 @@ import ReactDOM  from 'react-dom';
 import styles    from './app.css';
 import Grid      from './components/Grid/Grid';
 import Select    from './components/Select/Select';
+import {
+  RecoilRoot
+} from 'recoil';
 
 const App = ()=>{
   // |--- Log
@@ -17,8 +20,10 @@ const App = ()=>{
     <div
       className={styles.container}
     >
-      <Select/>
-      <Grid></Grid>
+      <RecoilRoot>
+        <Select/>
+        <Grid></Grid>
+      </RecoilRoot>
     </div>
   );
 }
